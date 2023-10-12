@@ -1,4 +1,22 @@
+import {useState} from "react";
+import PizzaBlock from "./PizzaBlock";
+
 function Sort () {
+
+    const [isVisible, setIsVisible] = useState(false);
+    const [selectSort, setSelectSort] = useState(0);
+
+    const arraySort = ['Популярности', 'Цене', 'Алфавиту'];
+
+    const onClickSort = () => {
+        setIsVisible(!isVisible);
+    }
+
+    const onClickSelectedSort = (index) => {
+        setSelectSort(index);
+        setIsVisible(false);
+    }
+
     return (
         <div className="sort">
             <div className="sort__label">
@@ -14,16 +32,25 @@ function Sort () {
                         fill="#2C2C2C"
                     />
                 </svg>
-                <b>Сортировка по:</b>
-                <span>популярности</span>
+                <b >Сортировка по:</b>
+                <span onClick={() => onClickSort()}>{arraySort[selectSort]}</span>
             </div>
-            <div className="sort__popup">
-                <ul>
-                    <li className="active">популярности</li>
-                    <li>цене</li>
-                    <li>алфавиту</li>
-                </ul>
-            </div>
+            {
+                isVisible && (
+                    <div className="sort__popup">
+                        <ul>
+                            {arraySort.map((currentSort, index) => (
+                                <li
+                                    key={index}
+                                    onClick={() => onClickSelectedSort(index)}
+                                    className={selectSort === index ? "active" : ""}>
+                                    {currentSort}
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                )
+            }
         </div>
     )
 }

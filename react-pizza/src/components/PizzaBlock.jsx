@@ -3,8 +3,8 @@ import {useState} from "react";
 function PizzaBlock ({title, price, imgUrl, sizes, types}) {
 
     const [countPizza, setCountPizza] = useState(0);
-    const [currentType, setCurrentType] = useState(0);
-    const [currentSize, setCurrentSize] = useState(0);
+    const [selectType, setSelectType] = useState(0);
+    const [selectSize, setSelectSize] = useState(0);
 
     const typeNames = ['Тонкое', 'Традиционное'];
 
@@ -13,11 +13,11 @@ function PizzaBlock ({title, price, imgUrl, sizes, types}) {
     }
 
     const onClickType = (index) => {
-        setCurrentType(index);
+        setSelectType(index);
     }
 
     const onClickSize = (index) => {
-        setCurrentSize(index)
+        setSelectSize(index)
     }
 
     return (
@@ -33,14 +33,20 @@ function PizzaBlock ({title, price, imgUrl, sizes, types}) {
                     <ul>
                         {
                             types.map((type) => (
-                                <li onClick={() => onClickType(type)} className={currentType === type ? "active" : ""}>{typeNames[type]}</li>
+                                <li
+                                    key={type}
+                                    onClick={() => onClickType(type)} className={selectType === type ? "active" : ""}>{typeNames[type]}</li>
                             ))
                         }
                     </ul>
                     <ul>
                         {
                             sizes.map((size, id) => (
-                                <li onClick={() => onClickSize(id)} className={currentSize === id ? "active" : ""}>{size} см.</li>
+                                <li
+                                    key={size}
+                                    onClick={() => onClickSize(id)} className={selectSize === id ? "active" : ""}>
+                                    {size} см.
+                                </li>
                             ))
                         }
                     </ul>
