@@ -1,5 +1,5 @@
 import {useState} from "react";
-import PizzaBlock from "./PizzaBlock";
+import Index from "./PizzaBlock";
 
 function Sort () {
 
