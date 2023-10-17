@@ -1,19 +1,25 @@
 import {useState} from "react";
 import Index from "./PizzaBlock";
 
-function Sort () {
+function Sort ({value, onChangeSort}) {
 
     const [isVisible, setIsVisible] = useState(false);
-    const [selectSort, setSelectSort] = useState(0);
 
-    const arraySort = ['Популярности', 'Цене', 'Алфавиту'];
+    const arraySort = [
+        {name: 'Популярности (DESC)', sortProperty: 'rating'},
+        {name: 'Популярности (ASC)', sortProperty: '-rating'},
+        {name: 'Цене (DESC)', sortProperty: 'price'},
+        {name: 'Цене (ASC)', sortProperty: '-price'},
+        {name: 'Алфавиту (DESC)', sortProperty: 'title'},
+        {name: 'Алфавиту (ASC)', sortProperty: '-title'},
+    ]
 
     const onClickSort = () => {
         setIsVisible(!isVisible);
     }
 
     const onClickSelectedSort = (index) => {
-        setSelectSort(index);
+        onChangeSort(index);
         setIsVisible(false);
     }
 
@@ -33,7 +39,7 @@ function Sort () {
                     />
                 </svg>
                 <b >Сортировка по:</b>
-                <span onClick={() => onClickSort()}>{arraySort[selectSort]}</span>
+                <span onClick={() => onClickSort()}>{arraySort[value.name]}</span>
             </div>
             {
                 isVisible && (
@@ -42,8 +48,8 @@ function Sort () {
                             {arraySort.map((currentSort, index) => (
                                 <li
                                     key={index}
-                                    onClick={() => onClickSelectedSort(index)}
-                                    className={selectSort === index ? "active" : ""}>
+                                    onClick={() => onClickSelectedSort(currentSort)}
+                                    className={value.sortProperty === currentSort.sortProperty ? "active" : ""}>
                                     {currentSort}
                                 </li>
                             ))}
