@@ -50,7 +50,7 @@ function Sort ({value, onChangeSort}) {
                                     key={index}
                                     onClick={() => onClickSelectedSort(currentSort)}
                                     className={value.sortProperty === currentSort.sortProperty ? "active" : ""}>
-                                    {currentSort}
+                                    {currentSort.name}
                                 </li>
                             ))}
                         </ul>
