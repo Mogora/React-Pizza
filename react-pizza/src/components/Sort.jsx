@@ -1,5 +1,4 @@
 import {useState} from "react";
-import Index from "./PizzaBlock";
 
 function Sort ({value, onChangeSort}) {
 
@@ -12,7 +11,7 @@ function Sort ({value, onChangeSort}) {
         {name: 'Цене (ASC)', sortProperty: '-price'},
         {name: 'Алфавиту (DESC)', sortProperty: 'title'},
         {name: 'Алфавиту (ASC)', sortProperty: '-title'},
-    ]
+    ];
 
     const onClickSort = () => {
         setIsVisible(!isVisible);
@@ -39,7 +38,7 @@ function Sort ({value, onChangeSort}) {
                     />
                 </svg>
                 <b >Сортировка по:</b>
-                <span onClick={() => onClickSort()}>{arraySort[value.name]}</span>
+                <span onClick={() => onClickSort()}>{value.name}</span>
             </div>
             {
                 isVisible && (
@@ -48,7 +47,7 @@ function Sort ({value, onChangeSort}) {
                             {arraySort.map((currentSort, index) => (
                                 <li
                                     key={index}
-                                    onClick={() => onClickSelectedSort(currentSort)}
+                                    onClick={() => onClickSelectedSort(index)}
                                     className={value.sortProperty === currentSort.sortProperty ? "active" : ""}>
                                     {currentSort.name}
                                 </li>

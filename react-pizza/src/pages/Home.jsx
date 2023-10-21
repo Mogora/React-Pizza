@@ -18,11 +18,11 @@ function Home () {
 
         setIsLoading(true)
 
-        const order = currentSort.sortProperty.includes('-' ? 'asc' : 'desc');
-        const sortBy = currentSort.sortProperty.replace('-', '');
+        const sortBy = currentSort.sortProperty?.replace('-', '');
+        const order = currentSort.sortProperty?.includes('-' ? 'asc' : 'desc');
         const category = currentCategory > 0 ? `category=${currentCategory}` : '';
 
-        fetch(`https://1224693e0130cf17.mokky.dev/items?${category}&sortBy=${sortBy}&order=${order}`,)
+        fetch(`https://64fde9e8596493f7af7ec2a3.mockapi.io/items?${category}&sortBy+${sortBy}&order+${order}`)
             .then((res) => res.json())
             .then((arrItems) => {
                 setItems(arrItems);
