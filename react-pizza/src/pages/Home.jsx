@@ -11,14 +11,11 @@ import {setCurrentCategory} from "../redux/slices/filterSlice";
 function Home () {
     const dispatch = useDispatch();
     const currentCategory = useSelector(state => state.filter.currentCategory);
+    const currentSort = useSelector(state => state.filter.sort.sortProperty)
     const {searchValue} = useContext(MyContext);
     const [items, setItems] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
-    const [currentSort, setCurrentSort] = useState({
-        name: 'Популярности',
-        sortProperty: 'rating',
-    });
 
     const onChangeCategory = (id) => {
         dispatch(setCurrentCategory(id));
@@ -28,8 +25,8 @@ function Home () {
 
         setIsLoading(true)
 
-        const sortBy = currentSort.sortProperty?.replace('-', '');
-        const order = currentSort.sortProperty?.includes('-' ? 'asc' : 'desc');
+        const sortBy = currentSort.replace('-', '');
+        const order = currentSort.includes('-' ? 'asc' : 'desc');
         const category = currentCategory > 0 ? `category=${currentCategory}` : '';
 
         fetch(`https://64fde9e8596493f7af7ec2a3.mockapi.io/items?page=${currentPage}&limit=4&${category}&sortBy+${sortBy}&order+${order}`)
@@ -62,7 +59,7 @@ function Home () {
         <div className="container">
             <div className="content__top">
                 <Categories value={currentCategory} onChangeCategory={onChangeCategory}/>
-                <Sort value={currentSort} onChangeSort={(id) => setCurrentSort(id)}/>
+                <Sort/>
             </div>
             <h2 className="content__title">Все пиццы</h2>
             <div className="content__items">
