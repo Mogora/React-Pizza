@@ -5,17 +5,24 @@ import Index from "../components/PizzaBlock";
 import {useContext, useEffect, useState} from "react";
 import Pagination from "../components/Pagination";
 import {MyContext} from "../App";
+import {useDispatch, useSelector} from "react-redux";
+import {setCurrentCategory} from "../redux/slices/filterSlice";
 
 function Home () {
+    const dispatch = useDispatch();
+    const currentCategory = useSelector(state => state.filter.currentCategory);
     const {searchValue} = useContext(MyContext);
     const [items, setItems] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    const [currentCategory, setCurrentCategory] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);
     const [currentSort, setCurrentSort] = useState({
         name: 'Популярности',
         sortProperty: 'rating',
     });
+
+    const onChangeCategory = (id) => {
+        dispatch(setCurrentCategory(id));
+    };
 
     useEffect(() => {
 
@@ -48,12 +55,13 @@ function Home () {
         sizes={obj.sizes}
         types={obj.types}/>
     );
+
     const skeleton = [...new Array(6)].map(() => <Skeleton/>);
 
     return (
         <div className="container">
             <div className="content__top">
-                <Categories value={currentCategory} onChangeCategory={(id) => setCurrentCategory(id)}/>
+                <Categories value={currentCategory} onChangeCategory={onChangeCategory}/>
                 <Sort value={currentSort} onChangeSort={(id) => setCurrentSort(id)}/>
             </div>
             <h2 className="content__title">Все пиццы</h2>
