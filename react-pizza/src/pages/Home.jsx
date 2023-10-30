@@ -7,6 +7,7 @@ import Pagination from "../components/Pagination";
 import {MyContext} from "../App";
 import {useDispatch, useSelector} from "react-redux";
 import {setCurrentCategory} from "../redux/slices/filterSlice";
+import axios from "axios";
 
 function Home () {
     const dispatch = useDispatch();
