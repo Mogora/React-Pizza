@@ -6,21 +6,24 @@ import {useContext, useEffect, useState} from "react";
 import Pagination from "../components/Pagination";
 import {MyContext} from "../App";
 import {useDispatch, useSelector} from "react-redux";
-import {setCurrentCategory} from "../redux/slices/filterSlice";
-import axios from "axios";
+import {setCurrentCategory, setCurrentPage} from "../redux/slices/filterSlice";
 
 function Home () {
     const dispatch = useDispatch();
     const currentCategory = useSelector(state => state.filter.currentCategory);
-    const currentSort = useSelector(state => state.filter.sort.sortProperty)
+    const currentSort = useSelector(state => state.filter.sort.sortProperty);
+    const currentPage = useSelector(state => state.filter.currentPage)
     const {searchValue} = useContext(MyContext);
     const [items, setItems] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    const [currentPage, setCurrentPage] = useState(1);
 
     const onChangeCategory = (id) => {
         dispatch(setCurrentCategory(id));
     };
+
+    const onChangePage = (number) => {
+        dispatch((setCurrentPage(number)))
+    }
 
     useEffect(() => {
 
@@ -37,7 +40,7 @@ function Home () {
                 setIsLoading(false);
             });
         window.scroll(0,0);
-    }, [currentCategory, currentSort, currentPage]);
+    }, [currentCategory, currentSort, currentPage, searchValue]);
 
     const pizzas = items.filter((obj) => {
         if (obj.title.toLowerCase().includes(searchValue.toLowerCase()))
@@ -68,7 +71,7 @@ function Home () {
                     isLoading ? skeleton : pizzas
                 }
             </div>
-            <Pagination onChangePage={(number) => setCurrentPage(number)}/>
+            <Pagination currentPage={currentPage} onChangePage={onChangePage}/>
         </div>
     )
 }

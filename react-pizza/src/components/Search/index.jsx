@@ -11,7 +11,7 @@ function Search () {
     const updateSearchValue = useCallback(
         debounce((data) => {
             setSearchValue(data);
-        }, 1000),
+        }, 250),
         [],
     );
 
