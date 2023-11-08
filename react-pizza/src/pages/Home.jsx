@@ -49,7 +49,7 @@ function Home () {
         }
         return false;
     }).map((obj) => <Index
-        key={obj.id}
+        id={obj.id}
         title={obj.title}
         price={obj.price}
         imgUrl={obj.imageUrl}
