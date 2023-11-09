@@ -7,7 +7,7 @@ function Index ({id, title, price, imgUrl, sizes, types}) {
     const cartItem = useSelector((state) => state.cart.items.find(obj => obj.id === id));
     const [selectType, setSelectType] = useState(0);
     const [selectSize, setSelectSize] = useState(0);
-    const typeNames = ['Тонкое', 'Традиционное'];
+    const typeNames = ['Тонкая', 'Традиционная'];
 
     const addedCount = cartItem ? cartItem.count : 0;
 
@@ -26,7 +26,7 @@ function Index ({id, title, price, imgUrl, sizes, types}) {
             price,
             imgUrl,
             type: typeNames[selectType],
-            size: selectSize,
+            size: sizes[selectSize],
         };
         dispatch(addItem(item));
     }

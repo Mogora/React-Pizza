@@ -1,9 +1,20 @@
 import {useDispatch, useSelector} from "react-redux";
 import CartItem from "../components/CartItem";
+import {Link} from "react-router-dom";
+import {clearItems} from "../redux/slices/cartSlice";
 
 function Cart () {
     const dispatch = useDispatch();
-    const items = useSelector((state) => state.cart.items);
+    const {totalPrice, items} = useSelector((state) => state.cart);
+
+    const onClickClear = () => {
+        if (window.confirm('Очистить корзину?')) {
+            dispatch(clearItems())
+        }
+    }
+
+    const totalCount = items.reduce((sum, item) => sum + item.count, 0);
+
     return (
         <div className="container container--cart">
         <div className="cart">
@@ -34,7 +45,7 @@ function Cart () {
                         <path d="M11.6666 9.16667V14.1667" stroke="#B6B6B6" stroke-width="1.2" stroke-linecap="round"
                               stroke-linejoin="round"/>
                     </svg>
-                    <span>Очистить корзину</span>
+                    <span onClick={onClickClear}>Очистить корзину</span>
                 </div>
             </div>
             <div className="content__items">
@@ -44,18 +55,17 @@ function Cart () {
             </div>
             <div className="cart__bottom">
                 <div className="cart__bottom-details">
-                    <span> Всего пицц: <b>3 шт.</b> </span>
-                    <span> Сумма заказа: <b>900 ₽</b> </span>
+                    <span> Всего пицц: <b>{totalCount}</b> </span>
+                    <span> Сумма заказа: <b>{totalPrice} ₽</b> </span>
                 </div>
                 <div className="cart__bottom-buttons">
-                    <a href="/" className="button button--outline button--add go-back-btn">
+                    <Link to="/" className="button button--outline button--add go-back-btn">
                         <svg width="8" height="14" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M7 13L1 6.93015L6.86175 1" stroke="#D3D3D3" stroke-width="1.5"
                                   stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
-
                         <span>Вернуться назад</span>
-                    </a>
+                    </Link>
                     <div className="button pay-btn">
                         <span>Оплатить сейчас</span>
                     </div>

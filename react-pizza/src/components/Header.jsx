@@ -7,6 +7,7 @@ function Header () {
     const {items, totalPrice} = useSelector(state => state.cart);
 
     const totalCount = items.reduce((sum, item) => sum + item.count, 0);
+    // const totalPrice = items.reduce((price, item) => price + item.price, 0)
 
     return (
         <div className="header">
@@ -22,7 +23,8 @@ function Header () {
                 </Link>
                 <Search/>
                 <div className="header__cart">
-                    <a href="/cart" className="button button--cart">
+                    <Link to="/cart" className="button button--cart">
+                        {/*<span>{(totalCount < 1 ? 0 : totalPrice)}</span>*/}
                         <span>{totalPrice}</span>
                         <div className="button__delimiter"></div>
                         <svg
@@ -55,7 +57,7 @@ function Header () {
                             />
                         </svg>
                         <span>{totalCount}</span>
-                    </a>
+                    </Link>
                 </div>
             </div>
         </div>
